@@ -14,7 +14,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return (
                 (request.method in permissions.SAFE_METHODS)
                 or (obj.author == request.user)
-        )
+    )
 
 
 class PostViewSet(viewsets.ModelViewSet):
