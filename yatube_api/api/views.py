@@ -4,14 +4,16 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from posts.models import Group, Post, Follow, User
-from .serializers import CommentSerializer, GroupSerializer, PostSerializer, FollowSerializer
+from .serializers import \
+    CommentSerializer, GroupSerializer, \
+    PostSerializer, FollowSerializer
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return (
-            (request.method in permissions.SAFE_METHODS)
-            or (obj.author == request.user)
+                (request.method in permissions.SAFE_METHODS)
+                or (obj.author == request.user)
         )
 
 
@@ -35,7 +37,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [IsOwnerOrReadOnly,  IsAuthenticatedOrReadOnly]
+    permission_classes = [IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]
 
     def get_post(self):
         return get_object_or_404(

@@ -57,4 +57,3 @@ class FollowSerializer(serializers.ModelSerializer):
                 message=('Вы уже подписаны на данного пользователя!')
             )
         ]
-
