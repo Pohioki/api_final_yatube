@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, mixins, filters
 from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from posts.models import Group, Post, Follow, User
 from .serializers import CommentSerializer, GroupSerializer, PostSerializer, FollowSerializer
@@ -18,7 +18,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = [IsOwnerOrReadOnly, IsAuthenticated]
+    permission_classes = [IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly]
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
