@@ -1,20 +1,13 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, permissions, mixins, filters
+from rest_framework import viewsets, mixins, filters
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from .permissions import IsOwnerOrReadOnly
 from posts.models import Group, Post, Follow, User
 from .serializers import \
     CommentSerializer, GroupSerializer, \
     PostSerializer, FollowSerializer
-
-
-class IsOwnerOrReadOnly(permissions.BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return (
-            (request.method in permissions.SAFE_METHODS)
-            or (obj.author == request.user)
-        )
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -51,6 +44,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         return self.get_post().comments
 
 
+ #Хотела в пачку тебе написать, но тебя там неть.
+ #Cозданный ниже класс используется в классе FollowViewSet.
+ #Или мне удалить этот класс и как-то по другому сделать FollowViewSet?
 class ListCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
                         viewsets.GenericViewSet):
     pass
