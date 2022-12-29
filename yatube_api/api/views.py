@@ -44,9 +44,9 @@ class CommentViewSet(viewsets.ModelViewSet):
         return self.get_post().comments
 
 
- #Хотела в пачку тебе написать, но тебя там неть.
- #Cозданный ниже класс используется в классе FollowViewSet.
- #Или мне удалить этот класс и как-то по другому сделать FollowViewSet?
+# Хотела в пачку тебе написать, но тебя там неть.
+# Cозданный ниже класс используется в классе FollowViewSet.
+# Или мне удалить этот класс и как-то по другому сделать FollowViewSet?
 class ListCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
                         viewsets.GenericViewSet):
     pass
