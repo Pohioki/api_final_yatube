@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, mixins, filters
+from rest_framework import viewsets, mixins, filters, generics
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
@@ -44,15 +45,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         return self.get_post().comments
 
 
-# Хотела в пачку тебе написать, но тебя там неть.
-# Cозданный ниже класс используется в классе FollowViewSet.
-# Или мне удалить этот класс и как-то по другому сделать FollowViewSet?
-class ListCreateViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
-                        viewsets.GenericViewSet):
-    pass
-
-
-class FollowViewSet(ListCreateViewSet):
+class FollowViewSet(viewsets.ViewSetMixin, ListCreateAPIView):
     serializer_class = FollowSerializer
     filter_backends = (filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('^following__username',)
